@@ -65,11 +65,11 @@ import signplates.block.Plate0Block;
 
 import signplates.SignPlatesMod;
 
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
 
-import net.minecraft.world.level.block.Block;
+import net.minecraft.block.Block;
 
 public class SignPlatesModBlocks {
 	public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, SignPlatesMod.MODID);

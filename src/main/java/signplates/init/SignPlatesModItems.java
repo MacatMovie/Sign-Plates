@@ -3,15 +3,16 @@
  */
 package signplates.init;
 
+import signplates.init.SignPlatesModTabs;
 import signplates.SignPlatesMod;
 
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
 
 public class SignPlatesModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, SignPlatesMod.MODID);
@@ -78,7 +79,7 @@ public class SignPlatesModItems {
 	// Start of user code block custom items
 	// End of user code block custom items
 	private static RegistryObject<Item> block(RegistryObject<Block> block) {
-		return block(block, new Item.Properties());
+		return block(block, new Item.Properties().tab(SignPlatesModTabs.SIGN_PLATES_TAB));
 	}
 
 	private static RegistryObject<Item> block(RegistryObject<Block> block, Item.Properties properties) {
