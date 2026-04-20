@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "tag": "sign_plates:plates"
+  },
+  "result": {
+    "id": "sign_plates:plate_y",
+    "count": 1
+  }
+}
