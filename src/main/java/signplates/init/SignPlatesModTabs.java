@@ -5,8 +5,8 @@ package signplates.init;
 
 import signplates.SignPlatesMod;
 
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,7 +15,7 @@ import net.minecraft.core.registries.Registries;
 
 public class SignPlatesModTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SignPlatesMod.MODID);
-	public static final RegistryObject<CreativeModeTab> SIGN_PLATES_TAB = REGISTRY.register("sign_plates_tab",
+	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SIGN_PLATES_TAB = REGISTRY.register("sign_plates_tab",
 			() -> CreativeModeTab.builder().title(Component.translatable("item_group.sign_plates.sign_plates_tab")).icon(() -> new ItemStack(SignPlatesModBlocks.PLATE_FACEHAPPY.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(SignPlatesModBlocks.PLATE_A.get().asItem());
 				tabData.accept(SignPlatesModBlocks.PLATE_B.get().asItem());
