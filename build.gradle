@@ -2,13 +2,13 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+    id 'net.minecraftforge.gradle' version '5.1.+'
 }
 
 group = 'com.pathmakersstudio.signplates'
 version = '1.0.2'
 base {
-    archivesName = 'SignPlates-Forge-1.20.1'
+    archivesName = 'SignPlates-Forge-1.19.2'
 }
 
 java {
@@ -16,9 +16,8 @@ java {
 }
 
 minecraft {
-    mappings channel: 'official', version: '1.20.1'
+    mappings channel: 'official', version: '1.19.2'
 
-    copyIdeResources = true
 
     runs {
         configureEach {
@@ -50,7 +49,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.4.0'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.5.0'
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -59,9 +58,9 @@ tasks.withType(JavaCompile).configureEach {
 
 processResources {
     def replaceProperties = [
-        minecraft_version: '1.20.1',
-        forge_version_range: '[47,)',
-        loader_version_range: '[47,)',
+        minecraft_version: '1.19.2',
+        forge_version_range: '[43,)',
+        loader_version_range: '[43,)',
         mod_id: 'sign_plates',
         mod_name: 'Sign Plates',
         mod_license: 'All Rights Reserved',
