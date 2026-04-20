@@ -8,11 +8,11 @@ version = mod_version
 group = mod_group_id
 
 base {
-    archivesName = 'SignPlates-NeoForge-1.21.6'
+    archivesName = 'SignPlates-NeoForge-26.1'
 }
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(21)
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
