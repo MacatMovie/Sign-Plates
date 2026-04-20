@@ -3,6 +3,7 @@
  */
 package signplates.init;
 
+import signplates.init.SignPlatesModTabs;
 import signplates.SignPlatesMod;
 
 import net.minecraftforge.registries.RegistryObject;
@@ -78,7 +79,7 @@ public class SignPlatesModItems {
 	// Start of user code block custom items
 	// End of user code block custom items
 	private static RegistryObject<Item> block(RegistryObject<Block> block) {
-		return block(block, new Item.Properties());
+		return block(block, new Item.Properties().tab(SignPlatesModTabs.SIGN_PLATES_TAB));
 	}
 
 	private static RegistryObject<Item> block(RegistryObject<Block> block, Item.Properties properties) {
