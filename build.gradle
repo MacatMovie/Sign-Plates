@@ -1,103 +1,58 @@
 plugins {
-    id 'eclipse'
-    id 'idea'
+    id 'fabric-loom' version "${loom_version}"
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-group = 'com.pathmakersstudio.signplates'
-version = '1.0.2'
-base {
-    archivesName = 'SignPlates-Forge-1.20.1'
-}
-
-java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
-}
-
-minecraft {
-    mappings channel: 'official', version: '1.20.1'
-
-    copyIdeResources = true
-
-    runs {
-        configureEach {
-            workingDirectory project.file('run')
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'info'
-            mods {
-                sign_plates {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        client {}
-
-        server {
-            args '--nogui'
-        }
-
-        data {
-            workingDirectory project.file('run-data')
-            args '--mod', 'sign_plates', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-        }
-    }
-}
+version = project.mod_version
+group = project.maven_group
 
 repositories {
-    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.4.0'
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }
 
 processResources {
-    def replaceProperties = [
-        minecraft_version: '1.20.1',
-        forge_version_range: '[47,)',
-        loader_version_range: '[47,)',
-        mod_id: 'sign_plates',
-        mod_name: 'Sign Plates',
-        mod_license: 'All Rights Reserved',
-        mod_version: project.version,
-        mod_authors: 'MacatMovie',
-        mod_description: 'This is your sign to sign bigger!'
-    ]
-    inputs.properties replaceProperties
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
-        expand replaceProperties + [project: project]
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": inputs.properties.version
     }
 }
 
-tasks.named('jar', Jar).configure {
-    manifest {
-        attributes([
-            'Specification-Title'     : 'sign_plates',
-            'Specification-Vendor'    : 'MacatMovie',
-            'Specification-Version'   : '1',
-            'Implementation-Title'    : project.name,
-            'Implementation-Version'  : project.version,
-            'Implementation-Vendor'   : 'MacatMovie',
-            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release = 21
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveFileName = "SignPlates-Fabric-1.21.4-v${project.version}.jar"
+}
+
+remapJar {
+    archiveFileName = "SignPlates-Fabric-1.21.4-v${project.version}.jar"
+}
+
+remapSourcesJar {
+    archiveFileName = "SignPlates-Fabric-1.21.4-v${project.version}-sources.jar"
 }
 
 publishing {
     publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
-    }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+        create("mavenJava", MavenPublication) {
+            from components.java
         }
     }
 }
