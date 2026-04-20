@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    "minecraft:deepslate",
+    "minecraft:iron_ingot"
+  ],
+  "result": {
+    "id": "sign_plates:plate_empty",
+    "count": 1
+  }
+}
