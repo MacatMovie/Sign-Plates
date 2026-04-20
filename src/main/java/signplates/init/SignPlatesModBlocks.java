@@ -1,0 +1,137 @@
+/*
+ *    MCreator note: This file will be REGENERATED on each build.
+ */
+package signplates.init;
+
+import signplates.block.PlateZBlock;
+import signplates.block.PlateYBlock;
+import signplates.block.PlateXBlock;
+import signplates.block.PlateWaterBlock;
+import signplates.block.PlateWBlock;
+import signplates.block.PlateVBlock;
+import signplates.block.PlateUBlock;
+import signplates.block.PlateTBlock;
+import signplates.block.PlateStopBlock;
+import signplates.block.PlateSBlock;
+import signplates.block.PlateRBlock;
+import signplates.block.PlateQBlock;
+import signplates.block.PlatePlusBlock;
+import signplates.block.PlatePBlock;
+import signplates.block.PlateOBlock;
+import signplates.block.PlateNBlock;
+import signplates.block.PlateMoneyBlock;
+import signplates.block.PlateMinusBlock;
+import signplates.block.PlateMBlock;
+import signplates.block.PlateLightBlock;
+import signplates.block.PlateLBlock;
+import signplates.block.PlateKBlock;
+import signplates.block.PlateJBlock;
+import signplates.block.PlateIncorrectBlock;
+import signplates.block.PlateIBlock;
+import signplates.block.PlateHeartBlock;
+import signplates.block.PlateHBlock;
+import signplates.block.PlateGBlock;
+import signplates.block.PlateFireBlock;
+import signplates.block.PlateFacesadBlock;
+import signplates.block.PlateFaceneutralBlock;
+import signplates.block.PlateFacemadBlock;
+import signplates.block.PlateFacehappyBlock;
+import signplates.block.PlateFacecatBlock;
+import signplates.block.PlateFBlock;
+import signplates.block.PlateEmptyBlock;
+import signplates.block.PlateElectricityBlock;
+import signplates.block.PlateEBlock;
+import signplates.block.PlateDangerBlock;
+import signplates.block.PlateDBlock;
+import signplates.block.PlateCorrectBlock;
+import signplates.block.PlateCBlock;
+import signplates.block.PlateBonusBlock;
+import signplates.block.PlateBBlock;
+import signplates.block.PlateArrowupBlock;
+import signplates.block.PlateArrowrightBlock;
+import signplates.block.PlateArrowleftBlock;
+import signplates.block.PlateArrowdownBlock;
+import signplates.block.PlateABlock;
+import signplates.block.Plate9Block;
+import signplates.block.Plate8Block;
+import signplates.block.Plate7Block;
+import signplates.block.Plate6Block;
+import signplates.block.Plate5Block;
+import signplates.block.Plate4Block;
+import signplates.block.Plate3Block;
+import signplates.block.Plate2Block;
+import signplates.block.Plate1Block;
+import signplates.block.Plate0Block;
+
+import signplates.SignPlatesMod;
+
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.DeferredRegister;
+
+import net.minecraft.world.level.block.Block;
+
+public class SignPlatesModBlocks {
+	public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, SignPlatesMod.MODID);
+	public static final RegistryObject<Block> PLATE_A = REGISTRY.register("plate_a", () -> new PlateABlock());
+	public static final RegistryObject<Block> PLATE_B = REGISTRY.register("plate_b", () -> new PlateBBlock());
+	public static final RegistryObject<Block> PLATE_C = REGISTRY.register("plate_c", () -> new PlateCBlock());
+	public static final RegistryObject<Block> PLATE_D = REGISTRY.register("plate_d", () -> new PlateDBlock());
+	public static final RegistryObject<Block> PLATE_E = REGISTRY.register("plate_e", () -> new PlateEBlock());
+	public static final RegistryObject<Block> PLATE_F = REGISTRY.register("plate_f", () -> new PlateFBlock());
+	public static final RegistryObject<Block> PLATE_G = REGISTRY.register("plate_g", () -> new PlateGBlock());
+	public static final RegistryObject<Block> PLATE_H = REGISTRY.register("plate_h", () -> new PlateHBlock());
+	public static final RegistryObject<Block> PLATE_I = REGISTRY.register("plate_i", () -> new PlateIBlock());
+	public static final RegistryObject<Block> PLATE_J = REGISTRY.register("plate_j", () -> new PlateJBlock());
+	public static final RegistryObject<Block> PLATE_K = REGISTRY.register("plate_k", () -> new PlateKBlock());
+	public static final RegistryObject<Block> PLATE_L = REGISTRY.register("plate_l", () -> new PlateLBlock());
+	public static final RegistryObject<Block> PLATE_M = REGISTRY.register("plate_m", () -> new PlateMBlock());
+	public static final RegistryObject<Block> PLATE_N = REGISTRY.register("plate_n", () -> new PlateNBlock());
+	public static final RegistryObject<Block> PLATE_O = REGISTRY.register("plate_o", () -> new PlateOBlock());
+	public static final RegistryObject<Block> PLATE_P = REGISTRY.register("plate_p", () -> new PlatePBlock());
+	public static final RegistryObject<Block> PLATE_R = REGISTRY.register("plate_r", () -> new PlateRBlock());
+	public static final RegistryObject<Block> PLATE_S = REGISTRY.register("plate_s", () -> new PlateSBlock());
+	public static final RegistryObject<Block> PLATE_T = REGISTRY.register("plate_t", () -> new PlateTBlock());
+	public static final RegistryObject<Block> PLATE_Q = REGISTRY.register("plate_q", () -> new PlateQBlock());
+	public static final RegistryObject<Block> PLATE_U = REGISTRY.register("plate_u", () -> new PlateUBlock());
+	public static final RegistryObject<Block> PLATE_V = REGISTRY.register("plate_v", () -> new PlateVBlock());
+	public static final RegistryObject<Block> PLATE_W = REGISTRY.register("plate_w", () -> new PlateWBlock());
+	public static final RegistryObject<Block> PLATE_X = REGISTRY.register("plate_x", () -> new PlateXBlock());
+	public static final RegistryObject<Block> PLATE_Y = REGISTRY.register("plate_y", () -> new PlateYBlock());
+	public static final RegistryObject<Block> PLATE_Z = REGISTRY.register("plate_z", () -> new PlateZBlock());
+	public static final RegistryObject<Block> PLATE_EMPTY = REGISTRY.register("plate_empty", () -> new PlateEmptyBlock());
+	public static final RegistryObject<Block> PLATE_0 = REGISTRY.register("plate_0", () -> new Plate0Block());
+	public static final RegistryObject<Block> PLATE_1 = REGISTRY.register("plate_1", () -> new Plate1Block());
+	public static final RegistryObject<Block> PLATE_2 = REGISTRY.register("plate_2", () -> new Plate2Block());
+	public static final RegistryObject<Block> PLATE_3 = REGISTRY.register("plate_3", () -> new Plate3Block());
+	public static final RegistryObject<Block> PLATE_4 = REGISTRY.register("plate_4", () -> new Plate4Block());
+	public static final RegistryObject<Block> PLATE_5 = REGISTRY.register("plate_5", () -> new Plate5Block());
+	public static final RegistryObject<Block> PLATE_6 = REGISTRY.register("plate_6", () -> new Plate6Block());
+	public static final RegistryObject<Block> PLATE_7 = REGISTRY.register("plate_7", () -> new Plate7Block());
+	public static final RegistryObject<Block> PLATE_8 = REGISTRY.register("plate_8", () -> new Plate8Block());
+	public static final RegistryObject<Block> PLATE_9 = REGISTRY.register("plate_9", () -> new Plate9Block());
+	public static final RegistryObject<Block> PLATE_PLUS = REGISTRY.register("plate_plus", () -> new PlatePlusBlock());
+	public static final RegistryObject<Block> PLATE_MINUS = REGISTRY.register("plate_minus", () -> new PlateMinusBlock());
+	public static final RegistryObject<Block> PLATE_ARROWUP = REGISTRY.register("plate_arrowup", () -> new PlateArrowupBlock());
+	public static final RegistryObject<Block> PLATE_ARROWDOWN = REGISTRY.register("plate_arrowdown", () -> new PlateArrowdownBlock());
+	public static final RegistryObject<Block> PLATE_ARROWLEFT = REGISTRY.register("plate_arrowleft", () -> new PlateArrowleftBlock());
+	public static final RegistryObject<Block> PLATE_ARROWRIGHT = REGISTRY.register("plate_arrowright", () -> new PlateArrowrightBlock());
+	public static final RegistryObject<Block> PLATE_MONEY = REGISTRY.register("plate_money", () -> new PlateMoneyBlock());
+	public static final RegistryObject<Block> PLATE_FACEHAPPY = REGISTRY.register("plate_facehappy", () -> new PlateFacehappyBlock());
+	public static final RegistryObject<Block> PLATE_FACESAD = REGISTRY.register("plate_facesad", () -> new PlateFacesadBlock());
+	public static final RegistryObject<Block> PLATE_FACEMAD = REGISTRY.register("plate_facemad", () -> new PlateFacemadBlock());
+	public static final RegistryObject<Block> PLATE_FACENEUTRAL = REGISTRY.register("plate_faceneutral", () -> new PlateFaceneutralBlock());
+	public static final RegistryObject<Block> PLATE_FACECAT = REGISTRY.register("plate_facecat", () -> new PlateFacecatBlock());
+	public static final RegistryObject<Block> PLATE_INCORRECT = REGISTRY.register("plate_incorrect", () -> new PlateIncorrectBlock());
+	public static final RegistryObject<Block> PLATE_CORRECT = REGISTRY.register("plate_correct", () -> new PlateCorrectBlock());
+	public static final RegistryObject<Block> PLATE_DANGER = REGISTRY.register("plate_danger", () -> new PlateDangerBlock());
+	public static final RegistryObject<Block> PLATE_STOP = REGISTRY.register("plate_stop", () -> new PlateStopBlock());
+	public static final RegistryObject<Block> PLATE_BONUS = REGISTRY.register("plate_bonus", () -> new PlateBonusBlock());
+	public static final RegistryObject<Block> PLATE_FIRE = REGISTRY.register("plate_fire", () -> new PlateFireBlock());
+	public static final RegistryObject<Block> PLATE_WATER = REGISTRY.register("plate_water", () -> new PlateWaterBlock());
+	public static final RegistryObject<Block> PLATE_ELECTRICITY = REGISTRY.register("plate_electricity", () -> new PlateElectricityBlock());
+	public static final RegistryObject<Block> PLATE_HEART = REGISTRY.register("plate_heart", () -> new PlateHeartBlock());
+	public static final RegistryObject<Block> PLATE_LIGHT = REGISTRY.register("plate_light", () -> new PlateLightBlock());
+	// Start of user code block custom blocks
+	// End of user code block custom blocks
+}
