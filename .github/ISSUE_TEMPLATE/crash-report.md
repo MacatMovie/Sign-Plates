@@ -2,13 +2,13 @@
 name: Crash report
 about: Oh no!
 title: "[Crash]"
-labels: crash
+labels: bug, crash
 assignees: MacatMovie
 
 ---
 
 **Context:**
-
+Describe the situation when the crash happened.
 
 **Setup info:**
 - Minecraft Version:
