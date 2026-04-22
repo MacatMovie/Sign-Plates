@@ -1,6 +1,6 @@
 ---
-name: Feature request
-about: Suggest an idea
+name: Suggestion / Request
+about: Suggest an idea or request a feature
 title: "[Suggestion]"
 labels: enhancement
 assignees: MacatMovie
