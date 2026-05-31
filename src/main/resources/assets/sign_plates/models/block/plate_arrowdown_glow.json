@@ -1,0 +1,8 @@
+{
+  "parent": "sign_plates:block/plate_sign",
+  "ambientocclusion": true,
+  "textures": {
+    "0": "sign_plates:block/plate_arrowdown_glow",
+    "particle": "sign_plates:block/plate_arrowdown_glow"
+  }
+}

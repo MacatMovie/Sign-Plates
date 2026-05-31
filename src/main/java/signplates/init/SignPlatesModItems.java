@@ -4,6 +4,7 @@
 package signplates.init;
 
 import signplates.SignPlatesMod;
+import signplates.item.SignPlateBlockItem;
 
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -13,7 +14,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.BlockItem;
 
 public class SignPlatesModItems {
 	public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(SignPlatesMod.MODID);
@@ -80,7 +80,7 @@ public class SignPlatesModItems {
 	// Start of user code block custom items
 	// End of user code block custom items
 	private static DeferredItem<Item> block(String name, DeferredBlock<? extends Block> block) {
-		return REGISTRY.register(name, registryName -> new BlockItem(block.get(), new Item.Properties()
+		return REGISTRY.register(name, registryName -> new SignPlateBlockItem(block.get(), new Item.Properties()
 			.setId(ResourceKey.create(Registries.ITEM, registryName))
 			.useBlockDescriptionPrefix()));
 	}

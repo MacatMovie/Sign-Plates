@@ -1,5 +1,7 @@
 package signplates.block;
 
+import signplates.PlateTint;
+
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -26,15 +28,23 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public class PlateMinusBlock extends Block implements SimpleWaterloggedBlock {
 	public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 	public static final EnumProperty<AttachFace> FACE = FaceAttachedHorizontalDirectionalBlock.FACE;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final EnumProperty<PlateTint> TINT = EnumProperty.create("tint", PlateTint.class);
+	public static final BooleanProperty GLOW = BooleanProperty.create("glow");
 
 	public PlateMinusBlock(BlockBehaviour.Properties properties) {
-		super(properties.sound(SoundType.METAL).strength(0.5f, 6f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(FACE, AttachFace.WALL).setValue(WATERLOGGED, false));
+		super(properties.sound(SoundType.METAL).strength(0.5f, 6f).noOcclusion().lightLevel(state -> state.getValue(GLOW) ? 13 : 0).isRedstoneConductor((bs, br, bp) -> false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(FACE, AttachFace.WALL).setValue(WATERLOGGED, false).setValue(TINT, PlateTint.NONE).setValue(GLOW, false));
 	}
 
 
@@ -72,7 +82,42 @@ public class PlateMinusBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(FACING, FACE, WATERLOGGED);
+		builder.add(FACING, FACE, WATERLOGGED, TINT, GLOW);
+	}
+
+	@Override
+	public InteractionResult useItemOn(ItemStack itemstack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, net.minecraft.world.phys.BlockHitResult hitResult) {
+		if (itemstack.is(Items.GLOW_INK_SAC)) {
+			if (!state.getValue(GLOW)) {
+				if (!level.isClientSide()) {
+					level.setBlock(pos, state.setValue(GLOW, true), 3);
+					if (!player.getAbilities().instabuild) itemstack.shrink(1);
+				}
+				return InteractionResult.SUCCESS;
+			}
+			return InteractionResult.CONSUME;
+		}
+		if (itemstack.is(Items.INK_SAC)) {
+			if (state.getValue(GLOW)) {
+				if (!level.isClientSide()) {
+					level.setBlock(pos, state.setValue(GLOW, false), 3);
+					if (!player.getAbilities().instabuild) itemstack.shrink(1);
+				}
+				return InteractionResult.SUCCESS;
+			}
+			return InteractionResult.CONSUME;
+		}
+		if (PlateTint.isDyeItemStack(itemstack)) {
+			PlateTint newTint = PlateTint.fromItemStack(itemstack);
+			if (state.getValue(TINT) != newTint) {
+				if (!level.isClientSide()) {
+					level.setBlock(pos, state.setValue(TINT, newTint), 3);
+					if (!player.getAbilities().instabuild) itemstack.shrink(1);
+				}
+				return InteractionResult.SUCCESS;
+			}
+		}
+		return super.useItemOn(itemstack, state, level, pos, player, hand, hitResult);
 	}
 
 	@Override
