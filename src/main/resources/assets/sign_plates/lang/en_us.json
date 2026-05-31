@@ -1,7 +1,7 @@
 {
   "block.sign_plates.plate_a": "Sign Plate A",
   "block.sign_plates.plate_b": "Sign Plate B",
-  "block.sign_plates.plate_c": "Sign Plate  C",
+  "block.sign_plates.plate_c": "Sign Plate C",
   "item_group.sign_plates.sign_plates_tab": "Sign Plates Tab",
   "block.sign_plates.plate_d": "Sign Plate D",
   "block.sign_plates.plate_e": "Sign Plate E",
@@ -55,8 +55,9 @@
   "block.sign_plates.plate_stop": "Sign Plate Stop",
   "block.sign_plates.plate_bonus": "Sign Plate Bonus",
   "block.sign_plates.plate_fire": "Sign Plate Fire",
-  "block.sign_plates.plate_water": "Sign Plate Water",
+  "block.sign_plates.plate_water": "Sign Plate Liquid",
   "block.sign_plates.plate_electricity": "Sign Plate Electricity",
   "block.sign_plates.plate_heart": "Sign Plate Heart",
-  "block.sign_plates.plate_light": "Sign Plate Light"
+  "block.sign_plates.plate_light": "Sign Plate Light",
+  "tooltip.sign_plates.interactions": "Can be dyed. Use Glow Ink Sac to toggle glow."
 }

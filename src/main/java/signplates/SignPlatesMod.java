@@ -17,6 +17,7 @@ public class SignPlatesMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        SignPlatesConfig.load();
         ModBlocks.init();
         ModTabs.init();
         LOGGER.info("Sign Plates initialized.");

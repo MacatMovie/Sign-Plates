@@ -15,6 +15,9 @@
   "entrypoints": {
     "main": [
       "signplates.SignPlatesMod"
+    ],
+    "client": [
+      "signplates.SignPlatesClient"
     ]
   },
   "depends": {

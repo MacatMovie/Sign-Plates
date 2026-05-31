@@ -3,8 +3,15 @@ package signplates.block;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -17,16 +24,21 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import signplates.PlateTint;
 
 public class PlateBlock extends FaceAttachedHorizontalDirectionalBlock implements SimpleWaterloggedBlock {
     public static final MapCodec<PlateBlock> CODEC = simpleCodec(PlateBlock::new);
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty GLOW = BooleanProperty.create("glow");
+    public static final EnumProperty<PlateTint> TINT = EnumProperty.create("tint", PlateTint.class);
 
     public PlateBlock() {
         this(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(0.5f, 6f).noOcclusion().isRedstoneConductor((bs, br, bp) -> false));
@@ -37,7 +49,9 @@ public class PlateBlock extends FaceAttachedHorizontalDirectionalBlock implement
         this.registerDefaultState(this.stateDefinition.any()
             .setValue(FACING, Direction.NORTH)
             .setValue(FACE, AttachFace.WALL)
-            .setValue(WATERLOGGED, false));
+            .setValue(WATERLOGGED, false)
+            .setValue(GLOW, false)
+            .setValue(TINT, PlateTint.NONE));
     }
 
     @Override
@@ -47,7 +61,7 @@ public class PlateBlock extends FaceAttachedHorizontalDirectionalBlock implement
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, FACE, WATERLOGGED);
+        builder.add(FACING, FACE, WATERLOGGED, GLOW, TINT);
     }
 
     @Override
@@ -127,5 +141,44 @@ public class PlateBlock extends FaceAttachedHorizontalDirectionalBlock implement
     @Override
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        if (stack.is(Items.GLOW_INK_SAC)) {
+            if (!state.getValue(GLOW)) {
+                if (!level.isClientSide()) {
+                    level.setBlock(pos, state.setValue(GLOW, true), 3);
+                    if (!player.getAbilities().instabuild) stack.shrink(1);
+                }
+                return ItemInteractionResult.SUCCESS;
+            }
+            return ItemInteractionResult.CONSUME;
+        }
+
+        if (stack.is(Items.INK_SAC)) {
+            if (state.getValue(GLOW)) {
+                if (!level.isClientSide()) {
+                    level.setBlock(pos, state.setValue(GLOW, false), 3);
+                    if (!player.getAbilities().instabuild) stack.shrink(1);
+                }
+                return ItemInteractionResult.SUCCESS;
+            }
+            return ItemInteractionResult.CONSUME;
+        }
+
+        if (stack.getItem() instanceof DyeItem dyeItem) {
+            PlateTint newTint = PlateTint.fromDyeColor(dyeItem.getDyeColor());
+            if (state.getValue(TINT) != newTint) {
+                if (!level.isClientSide()) {
+                    level.setBlock(pos, state.setValue(TINT, newTint), 3);
+                    if (!player.getAbilities().instabuild) stack.shrink(1);
+                }
+                return ItemInteractionResult.SUCCESS;
+            }
+            return ItemInteractionResult.CONSUME;
+        }
+
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 }
