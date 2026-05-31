@@ -1,7 +1,6 @@
 {
   "pack": {
-    "min_format": 84,
-    "max_format": 84,
-    "description": "This is your sign to sign bigger!"
+    "pack_format": 48,
+    "description": "This is your sign to sign bigger! "
   }
 }

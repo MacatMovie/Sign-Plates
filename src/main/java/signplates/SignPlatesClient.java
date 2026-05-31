@@ -1,58 +1,38 @@
 package signplates;
 
-import signplates.init.SignPlatesModBlocks;
+import java.util.List;
 
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
-
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockColorRegistry;
 import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
+import signplates.block.PlateBlock;
+import signplates.init.ModBlocks;
 
-import java.util.List;
-
-@EventBusSubscriber(modid = SignPlatesMod.MODID, value = Dist.CLIENT)
-public class SignPlatesClient {
-    @SubscribeEvent
-    public static void registerBlockColors(RegisterColorHandlersEvent.BlockTintSources event) {
-        event.register(List.of(new BlockTintSource() {
+public class SignPlatesClient implements ClientModInitializer {
+    @Override
+    public void onInitializeClient() {
+        BlockColorRegistry.register(List.of(new BlockTintSource() {
             @Override
             public int colorInWorld(BlockState state, BlockAndTintGetter level, BlockPos pos) {
-                return getTintColor(state);
+                return getPlateColor(state);
             }
 
             @Override
             public int color(BlockState state) {
-                return getTintColor(state);
+                return getPlateColor(state);
             }
-        }), allBlocks().toArray(Block[]::new));
+        }), ModBlocks.PLATES);
     }
 
-    private static int getTintColor(BlockState state) {
-        PlateTint tint = PlateTint.NONE;
-        boolean glow = false;
-        for (Property<?> property : state.getProperties()) {
-            if ("tint".equals(property.getName())) {
-                Object value = state.getValue(property);
-                if (value instanceof PlateTint plateTint) {
-                    tint = plateTint;
-                }
-            } else if ("glow".equals(property.getName())) {
-                Object value = state.getValue(property);
-                if (value instanceof Boolean b) {
-                    glow = b;
-                }
-            }
+    private static int getPlateColor(BlockState state) {
+        if (!state.hasProperty(PlateBlock.TINT)) {
+            return 0xFFFFFFFF;
         }
-        return 0xFF000000 | (glow ? tint.getGlowTintColor() : tint.getTintColor());
-    }
-
-    private static List<? extends Block> allBlocks() {
-        return SignPlatesModBlocks.REGISTRY.getEntries().stream().map(holder -> holder.get()).toList();
+        PlateTint tint = state.getValue(PlateBlock.TINT);
+        int rgb = state.getValue(PlateBlock.GLOW) ? tint.getGlowTintColor() : tint.getTintColor();
+        return 0xFF000000 | rgb;
     }
 }

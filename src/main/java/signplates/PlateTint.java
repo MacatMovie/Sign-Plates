@@ -2,8 +2,6 @@ package signplates;
 
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public enum PlateTint implements StringRepresentable {
 	NONE("none", null, 0xFFFFFF, 0xFFFFFF),
@@ -47,30 +45,6 @@ public enum PlateTint implements StringRepresentable {
 
 	public int getGlowTintColor() {
 		return this.glowTintColor;
-	}
-
-	public static boolean isDyeItemStack(ItemStack stack) {
-		return fromItemStack(stack) != NONE;
-	}
-
-	public static PlateTint fromItemStack(ItemStack stack) {
-		if (stack.is(Items.WHITE_DYE)) return WHITE;
-		if (stack.is(Items.ORANGE_DYE)) return ORANGE;
-		if (stack.is(Items.MAGENTA_DYE)) return MAGENTA;
-		if (stack.is(Items.LIGHT_BLUE_DYE)) return LIGHT_BLUE;
-		if (stack.is(Items.YELLOW_DYE)) return YELLOW;
-		if (stack.is(Items.LIME_DYE)) return LIME;
-		if (stack.is(Items.PINK_DYE)) return PINK;
-		if (stack.is(Items.GRAY_DYE)) return GRAY;
-		if (stack.is(Items.LIGHT_GRAY_DYE)) return LIGHT_GRAY;
-		if (stack.is(Items.CYAN_DYE)) return CYAN;
-		if (stack.is(Items.PURPLE_DYE)) return PURPLE;
-		if (stack.is(Items.BLUE_DYE)) return BLUE;
-		if (stack.is(Items.BROWN_DYE)) return BROWN;
-		if (stack.is(Items.GREEN_DYE)) return GREEN;
-		if (stack.is(Items.RED_DYE)) return RED;
-		if (stack.is(Items.BLACK_DYE)) return BLACK;
-		return NONE;
 	}
 
 	public static PlateTint fromDyeColor(DyeColor dyeColor) {

@@ -1,38 +1,25 @@
 package signplates;
 
-import signplates.init.SignPlatesModTabs;
-import signplates.init.SignPlatesModItems;
-import signplates.init.SignPlatesModBlocks;
+import net.fabricmc.api.ModInitializer;
+import net.minecraft.resources.Identifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import signplates.init.ModBlocks;
+import signplates.init.ModTabs;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+public class SignPlatesMod implements ModInitializer {
+    public static final String MOD_ID = "sign_plates";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+    }
 
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.bus.api.IEventBus;
-
-@Mod("sign_plates")
-public class SignPlatesMod {
-	public static final Logger LOGGER = LogManager.getLogger(SignPlatesMod.class);
-	public static final String MODID = "sign_plates";
-
-	public SignPlatesMod(IEventBus modEventBus) {
-		SignPlatesConfig.load();
-		// Start of user code block mod constructor
-		// End of user code block mod constructor
-		SignPlatesModBlocks.REGISTRY.register(modEventBus);
-
-		SignPlatesModItems.REGISTRY.register(modEventBus);
-
-		SignPlatesModTabs.REGISTRY.register(modEventBus);
-
-		// Start of user code block mod init
-		// End of user code block mod init
-	}
-
-	// Start of user code block mod methods
-	// End of user code block mod methods
+    @Override
+    public void onInitialize() {
+        SignPlatesConfig.load();
+        ModBlocks.init();
+        ModTabs.init();
+        LOGGER.info("Sign Plates initialized.");
+    }
 }

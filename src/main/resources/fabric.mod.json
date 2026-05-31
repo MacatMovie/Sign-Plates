@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "sign_plates",
+  "version": "${version}",
+  "name": "Sign Plates",
+  "description": "This is your sign to sign bigger!",
+  "authors": [
+    "MacatMovie"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/sign-plates-letters-symbols"
+  },
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "signplates.SignPlatesMod"
+    ],
+    "client": [
+      "signplates.SignPlatesClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": ">=26.1 <26.1.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  },
+  "icon": "logo.png"
+}
