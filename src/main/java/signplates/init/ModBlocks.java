@@ -1,12 +1,12 @@
 package signplates.init;
 
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
+import signplates.SignPlateBlockItem;
 import signplates.SignPlatesMod;
 import signplates.block.PlateBlock;
 
@@ -71,13 +71,21 @@ public static final Block PLATE_X = register("plate_x");
 public static final Block PLATE_Y = register("plate_y");
 public static final Block PLATE_Z = register("plate_z");
 
+public static final Block[] PLATES = new Block[] {
+    PLATE_0, PLATE_1, PLATE_2, PLATE_3, PLATE_4, PLATE_5, PLATE_6, PLATE_7, PLATE_8, PLATE_9, PLATE_A, PLATE_ARROWDOWN, PLATE_ARROWLEFT, PLATE_ARROWRIGHT, PLATE_ARROWUP, PLATE_B, PLATE_BONUS, PLATE_C, PLATE_CORRECT, PLATE_D, PLATE_DANGER, PLATE_E, PLATE_ELECTRICITY, PLATE_EMPTY, PLATE_F, PLATE_FACECAT, PLATE_FACEHAPPY, PLATE_FACEMAD, PLATE_FACENEUTRAL, PLATE_FACESAD, PLATE_FIRE, PLATE_G, PLATE_H, PLATE_HEART, PLATE_I, PLATE_INCORRECT, PLATE_J, PLATE_K, PLATE_L, PLATE_LIGHT, PLATE_M, PLATE_MINUS, PLATE_MONEY, PLATE_N, PLATE_O, PLATE_P, PLATE_PLUS, PLATE_Q, PLATE_R, PLATE_S, PLATE_STOP, PLATE_T, PLATE_U, PLATE_V, PLATE_W, PLATE_WATER, PLATE_X, PLATE_Y, PLATE_Z
+};
+
     private ModBlocks() {
     }
 
     private static Block register(String name) {
         Block block = Registry.register(BuiltInRegistries.BLOCK, SignPlatesMod.id(name),
-            new PlateBlock(BlockBehaviour.Properties.of().strength(1f, 10f).sound(SoundType.STONE).noOcclusion()));
-        Registry.register(BuiltInRegistries.ITEM, SignPlatesMod.id(name), new BlockItem(block, new Item.Properties()));
+            new PlateBlock(BlockBehaviour.Properties.of()
+                .strength(1f, 10f)
+                .sound(SoundType.STONE)
+                .noOcclusion()
+                .lightLevel(state -> state.getValue(PlateBlock.GLOW) ? 13 : 0)));
+        Registry.register(BuiltInRegistries.ITEM, SignPlatesMod.id(name), new SignPlateBlockItem(block, new Item.Properties()));
         return block;
     }
 
