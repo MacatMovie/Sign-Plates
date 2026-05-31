@@ -1,55 +1,108 @@
 {
   "variants": {
-    "face=floor,facing=north": {
+    "face=floor,facing=north,glow=false": {
       "model": "sign_plates:block/plate_f"
     },
-    "face=floor,facing=east": {
+    "face=floor,facing=north,glow=true": {
+      "model": "sign_plates:block/plate_f_glow"
+    },
+    "face=floor,facing=east,glow=false": {
       "model": "sign_plates:block/plate_f",
       "y": 90
     },
-    "face=floor,facing=south": {
+    "face=floor,facing=east,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "y": 90
+    },
+    "face=floor,facing=south,glow=false": {
       "model": "sign_plates:block/plate_f",
       "y": 180
     },
-    "face=floor,facing=west": {
+    "face=floor,facing=south,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "y": 180
+    },
+    "face=floor,facing=west,glow=false": {
       "model": "sign_plates:block/plate_f",
       "y": 270
     },
-    "face=wall,facing=north": {
+    "face=floor,facing=west,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "y": 270
+    },
+    "face=wall,facing=north,glow=false": {
       "model": "sign_plates:block/plate_f",
       "x": 90
     },
-    "face=wall,facing=east": {
+    "face=wall,facing=north,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "x": 90
+    },
+    "face=wall,facing=east,glow=false": {
       "model": "sign_plates:block/plate_f",
       "x": 90,
       "y": 90
     },
-    "face=wall,facing=south": {
+    "face=wall,facing=east,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=south,glow=false": {
       "model": "sign_plates:block/plate_f",
       "x": 90,
       "y": 180
     },
-    "face=wall,facing=west": {
+    "face=wall,facing=south,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=west,glow=false": {
       "model": "sign_plates:block/plate_f",
       "x": 90,
       "y": 270
     },
-    "face=ceiling,facing=north": {
+    "face=wall,facing=west,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "x": 90,
+      "y": 270
+    },
+    "face=ceiling,facing=north,glow=false": {
       "model": "sign_plates:block/plate_f",
       "x": 180,
       "y": 180
     },
-    "face=ceiling,facing=east": {
+    "face=ceiling,facing=north,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "x": 180,
+      "y": 180
+    },
+    "face=ceiling,facing=east,glow=false": {
       "model": "sign_plates:block/plate_f",
       "x": 180,
       "y": 270
     },
-    "face=ceiling,facing=south": {
+    "face=ceiling,facing=east,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "x": 180,
+      "y": 270
+    },
+    "face=ceiling,facing=south,glow=false": {
       "model": "sign_plates:block/plate_f",
       "x": 180
     },
-    "face=ceiling,facing=west": {
+    "face=ceiling,facing=south,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
+      "x": 180
+    },
+    "face=ceiling,facing=west,glow=false": {
       "model": "sign_plates:block/plate_f",
+      "x": 180,
+      "y": 90
+    },
+    "face=ceiling,facing=west,glow=true": {
+      "model": "sign_plates:block/plate_f_glow",
       "x": 180,
       "y": 90
     }

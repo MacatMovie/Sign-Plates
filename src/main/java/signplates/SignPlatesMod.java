@@ -36,6 +36,7 @@ public class SignPlatesMod {
 	public static final String MODID = "sign_plates";
 
 	public SignPlatesMod(FMLJavaModLoadingContext context) {
+		SignPlatesConfig.load();
 		// Start of user code block mod constructor
 		// End of user code block mod constructor
 		MinecraftForge.EVENT_BUS.register(this);

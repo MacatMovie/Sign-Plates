@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.pathmakersstudio.signplates'
-version = '1.0.2'
+version = '1.1.2'
 base {
     archivesName = 'SignPlates-Forge-1.20.1'
 }
