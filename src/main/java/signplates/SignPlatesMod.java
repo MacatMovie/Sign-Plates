@@ -35,6 +35,7 @@ public class SignPlatesMod {
 	public static final String MODID = "sign_plates";
 
 	public SignPlatesMod(IEventBus modEventBus) {
+		SignPlatesConfig.load();
 		// Start of user code block mod constructor
 		// End of user code block mod constructor
 		NeoForge.EVENT_BUS.register(this);
