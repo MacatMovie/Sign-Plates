@@ -1,0 +1,105 @@
+package signplates;
+
+import java.util.List;
+
+public final class PlateCatalog {
+    private PlateCatalog() {}
+    public static final List<String> SYMBOLS = List.of(
+        "empty",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "plus",
+        "minus",
+        "arrowup",
+        "arrowdown",
+        "arrowleft",
+        "arrowright",
+        "apple",
+        "bomb",
+        "bonus",
+        "cat",
+        "chest",
+        "correct",
+        "creeper",
+        "danger",
+        "dog",
+        "egg",
+        "electricity",
+        "facecat",
+        "facehappy",
+        "facemad",
+        "faceneutral",
+        "facesad",
+        "figure",
+        "fire",
+        "fish",
+        "heart",
+        "home",
+        "incorrect",
+        "ladder",
+        "landscape",
+        "light",
+        "message",
+        "money",
+        "moon",
+        "note",
+        "pickaxe",
+        "player",
+        "recycle",
+        "sandclock",
+        "shield",
+        "spikes",
+        "spiral",
+        "star",
+        "stop",
+        "sun",
+        "sword",
+        "text",
+        "trash",
+        "water");
+    public static String path(int symbol, int material) {
+        return (material == 0 ? "plate_" : material == 1 ? "spruce_plate_" : "clear_plate_") + SYMBOLS.get(symbol);
+    }
+    public static int category(int symbol) {
+        String name = SYMBOLS.get(symbol);
+        if (name.length() == 1 && Character.isLetter(name.charAt(0))) return 1;
+        if (name.length() == 1 && Character.isDigit(name.charAt(0))) return 2;
+        if (name.startsWith("arrow")) return 3;
+        if (name.startsWith("face")) return 4;
+        return 5;
+    }
+}

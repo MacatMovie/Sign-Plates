@@ -1,0 +1,3 @@
+package signplates.client;
+import java.util.List;import net.minecraft.client.resources.model.geometry.BakedQuad;import net.minecraft.client.renderer.rendertype.RenderTypes;import net.minecraft.client.renderer.item.ItemStackRenderState;
+final class PlateRenderCompat {static BakedQuad.MaterialInfo material(BakedQuad.MaterialInfo m){return new BakedQuad.MaterialInfo(m.sprite(),m.layer(),RenderTypes.entityCutoutCull(m.sprite().atlasLocation()),m.tintIndex(),m.shade(),m.lightEmission());}static void quads(ItemStackRenderState.LayerRenderState layer,List<BakedQuad> quads){layer.prepareQuadList().addAll(quads);}}

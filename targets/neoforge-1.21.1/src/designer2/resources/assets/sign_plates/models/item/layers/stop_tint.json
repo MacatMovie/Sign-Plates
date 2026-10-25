@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "symbol": "sign_plates:block/symbols/stop_mask",
+    "particle": "sign_plates:block/symbols/stop_mask"
+  },
+  "elements": [
+    {
+      "from": [
+        0.0,
+        0.0,
+        8.52
+      ],
+      "to": [
+        16.0,
+        16.0,
+        8.52
+      ],
+      "shade": true,
+      "faces": {
+        "south": {
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ],
+          "texture": "#symbol",
+          "tintindex": 0
+        }
+      }
+    }
+  ],
+  "ambientocclusion": true,
+  "render_type": "minecraft:cutout"
+}

@@ -1,0 +1,139 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '1.0.11'
+}
+
+// Read the release version explicitly: each target is a standalone Gradle project.
+def releaseProperties = new Properties()
+file('../../gradle.properties').withInputStream { releaseProperties.load(it) }
+ext.mod_version = releaseProperties.getProperty('mod_version')
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = 'SignPlates-NeoForge-1.21.1'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(21)
+}
+
+sourceSets.main.resources.setSrcDirs(['src/designer2/resources'])
+
+neoForge {
+    version = neo_version
+
+    runs {
+        client {
+            client()
+        }
+
+        server {
+            server()
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').absolutePath, '--existing', file('src/main/resources/').absolutePath
+        }
+    }
+
+    mods {
+        create(mod_id) {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://maven.terraformersmc.com/releases/' }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// Built-in Delete tasks keep execution independent of the Gradle script object,
+// so this cleanup also works when the configuration cache is restored.
+tasks.register('removeObsoletePlateRecipes', Delete) {
+    delete layout.buildDirectory.dir('resources/main/data/sign_plates/recipe/stonecutting'),
+           layout.buildDirectory.dir('resources/main/data/sign_plates/recipes/stonecutting')
+}
+
+tasks.withType(ProcessResources).configureEach {
+    dependsOn 'removeObsoletePlateRecipes'
+    // Also exclude obsolete recipes left behind by extracting over an older source.
+    exclude 'data/sign_plates/recipe/stonecutting/**', 'data/sign_plates/recipes/stonecutting/**' 
+    // Stale files can remain when extracting full sources over an older checkout.
+    exclude 'assets/sign_plates/blockstates/plate_empty.json',
+            'assets/sign_plates/models/block/plate_empty.json',
+            'assets/sign_plates/models/item/plate_empty.json',
+            'data/sign_plates/recipe/plate_empty_recipe.json',
+            'data/sign_plates/loot_table/blocks/plate_empty.json'
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            // Loader metadata must use a numeric Maven version; the archive keeps its v prefix.
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = uri("${project.projectDir}/mcmodsrepo")
+        }
+    }
+}
+
+// Sources/resources shared by every supported loader and Minecraft version.
+// This isolated designer target owns its config and config screen.
+// PlateTint is copied unchanged from the common palette until the rework is ported.
+sourceSets.main.java.srcDir '../../shared/neoforge-common/java/signplates/client'
+
+
+
+// Identical naming for regular, remapped and source archives.
+tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+    archiveBaseName.set('SignPlates-NeoForge-1.21.1')
+    archiveVersion.set("v${project.version}")
+}
+
+// Reuse existing symbol and GUI artwork, including locally customized GUI PNGs.
+// Legacy per-variant blockstates/models/data are deliberately not resource inputs.
+tasks.named('processResources', ProcessResources).configure {
+    from('src/main/resources') {
+        include 'logo.png', 'assets/sign_plates/textures/block/symbols/**', 'assets/sign_plates/textures/gui/**'
+    }
+}
+// Clear old resource output before processing the single-block resource layout.
+tasks.register('removeLegacyDesignerResources', Delete) {
+    delete layout.buildDirectory.dir('resources/main')
+}
+tasks.named('processResources').configure { dependsOn 'removeLegacyDesignerResources' }
+
+// Optional browser APIs only; neither browser is a runtime requirement.
+dependencies {
+    compileOnly 'mezz.jei:jei-1.21.1-common-api:19.21.0.247'
+    compileOnly 'dev.emi:emi-neoforge:1.1.24+1.21.1:api'
+}

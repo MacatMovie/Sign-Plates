@@ -1,0 +1,94 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+    id 'maven-publish'
+}
+
+// One release version for every target.
+def releaseProperties = new Properties()
+file('../../gradle.properties').withInputStream { releaseProperties.load(it) }
+ext.mod_version = releaseProperties.getProperty('mod_version')
+
+
+version = project.mod_version
+group = project.maven_group
+
+repositories {
+    maven { url = 'https://maven.terraformersmc.com/releases/' }
+    maven { url = 'https://maven.fabricmc.net/' }
+}
+
+dependencies {
+    modCompileOnly "com.terraformersmc:modmenu:11.0.3"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+}
+
+processResources {
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": inputs.properties.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding = 'UTF-8'
+    it.options.release = 21
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+}
+
+publishing {
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+// Sources/resources shared by every supported loader and Minecraft version.
+
+// Ignore legacy loader descriptors present in some original Fabric archives.
+sourceSets.main.resources.exclude 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml'
+
+// Identical naming for regular, remapped and source archives.
+tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+    archiveBaseName.set('SignPlates-Fabric-1.21.1')
+    archiveVersion.set("v${project.version}")
+}
+
+sourceSets.main.java.srcDir '../../shared/fabric-common/java'
+sourceSets.main.resources.srcDir '../../shared/designer-1.21.1/resources'
+
+// Remove recipes emitted by previous releases, including incremental builds.
+tasks.register('removeObsoletePlateRecipes', Delete) {
+    delete layout.buildDirectory.dir('resources/main/data/sign_plates/recipe/stonecutting'),
+           layout.buildDirectory.dir('resources/main/data/sign_plates/recipes/stonecutting')
+}
+tasks.withType(ProcessResources).configureEach {
+    dependsOn 'removeObsoletePlateRecipes'
+    exclude 'data/sign_plates/recipe/stonecutting/**', 'data/sign_plates/recipes/stonecutting/**'
+}
+
+sourceSets.main.resources.setSrcDirs(['src/main/resources'])
+sourceSets.main.resources.include 'fabric.mod.json', 'META-INF/**', 'sign_plates.mixins.json'
+tasks.named('processResources', ProcessResources).configure { from('../../shared/designer-1.21.1/resources') { include '**/*' } }
+tasks.register('removeLegacyDesignerResources', Delete) { delete layout.buildDirectory.dir('resources/main') }
+tasks.named('processResources').configure { dependsOn 'removeLegacyDesignerResources' }
+
+loom { mixin { useLegacyMixinAp = true; defaultRefmapName = 'sign_plates.refmap.json' } }
+
+repositories { maven { url = 'https://maven.blamejared.com' }; maven { url = 'https://maven.terraformersmc.com/releases/' } }
+dependencies { compileOnly 'mezz.jei:jei-1.21.1-common-api:19.21.0.247' }
+dependencies { modCompileOnly 'dev.emi:emi-fabric:1.1.24+1.21.1:api' }

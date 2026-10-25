@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "particle": "sign_plates:block/backgrounds/iron"
+  },
+  "elements": []
+}

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "signplates.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ChunkStorageMixin",
+    "ItemStackMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "sign_plates.refmap.json"
+}

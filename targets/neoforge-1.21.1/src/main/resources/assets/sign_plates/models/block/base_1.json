@@ -1,0 +1,82 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "base": "sign_plates:block/backgrounds/wood-spruce",
+    "particle": "sign_plates:block/backgrounds/wood-spruce"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        1,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            15,
+            15,
+            16
+          ],
+          "texture": "#base"
+        },
+        "east": {
+          "uv": [
+            0,
+            1,
+            1,
+            15
+          ],
+          "rotation": 270,
+          "texture": "#base"
+        },
+        "south": {
+          "uv": [
+            1,
+            0,
+            15,
+            1
+          ],
+          "rotation": 180,
+          "texture": "#base"
+        },
+        "west": {
+          "uv": [
+            15,
+            1,
+            16,
+            15
+          ],
+          "rotation": 90,
+          "texture": "#base"
+        },
+        "up": {
+          "uv": [
+            15,
+            15,
+            1,
+            1
+          ],
+          "texture": "#base"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#base",
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

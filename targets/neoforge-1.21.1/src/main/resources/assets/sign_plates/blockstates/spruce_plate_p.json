@@ -1,0 +1,564 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "face": "floor",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1"
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "north",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original"
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "north",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint"
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "north",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow"
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "east",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "east",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "east",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "south",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "south",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "south",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "west",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "west",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "floor",
+        "facing": "west",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "north",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "north",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "north",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "east",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "east",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "east",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "south",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "south",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "south",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "west",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "west",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "wall",
+        "facing": "west",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "north"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 180,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "north",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 180,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "north",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 180,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "north",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 180,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "east"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 180,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "east",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 180,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "east",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 180,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "east",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 180,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "south"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "south",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "south",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "south",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "west"
+      },
+      "apply": {
+        "model": "sign_plates:block/base_1",
+        "x": 180,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "west",
+        "glow": "false",
+        "tint": "none"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_original",
+        "x": 180,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "west",
+        "glow": "false",
+        "tint": "white|orange|magenta|light_blue|yellow|lime|pink|gray|light_gray|cyan|purple|blue|brown|green|red|black|maroon|rose|coral|indigo|navy|slate|olive|amber|beige|teal|mint|aqua|verdant|forest|ginger|tan"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_tint",
+        "x": 180,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "face": "ceiling",
+        "facing": "west",
+        "glow": "true"
+      },
+      "apply": {
+        "model": "sign_plates:block/symbols/p_glow",
+        "x": 180,
+        "y": 90
+      }
+    }
+  ]
+}

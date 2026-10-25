@@ -1,0 +1,147 @@
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+// One release version for every target.
+def releaseProperties = new Properties()
+file('../../gradle.properties').withInputStream { releaseProperties.load(it) }
+ext.mod_version = releaseProperties.getProperty('mod_version')
+
+
+group = 'com.pathmakersstudio.signplates'
+version = mod_version
+base {
+    archivesName = 'SignPlates-Forge-1.20.1'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+
+    copyIdeResources = true
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'info'
+            mods {
+                sign_plates {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {}
+
+        server {
+            args '--nogui'
+        }
+
+        data {
+            workingDirectory project.file('run-data')
+            args '--mod', 'sign_plates', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.0'
+}
+
+// Keep Forge's remapping command below Windows' process command-line limit.
+// The library list can be very long when the project/cache path contains spaces.
+tasks.withType(net.minecraftforge.gradle.userdev.tasks.RenameJarInPlace).configureEach {
+    useArgsFile = true
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+processResources {
+    def replaceProperties = [
+        minecraft_version: '1.20.1',
+        forge_version_range: '[47,)',
+        loader_version_range: '[47,)',
+        mod_id: 'sign_plates',
+        mod_name: 'Sign Plates',
+        mod_license: 'All Rights Reserved',
+        mod_version: project.version,
+        mod_authors: 'MacatMovie',
+        mod_description: 'This is your sign to sign bigger!'
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+            'Specification-Title'     : 'sign_plates',
+            'Specification-Vendor'    : 'MacatMovie',
+            'Specification-Version'   : '1',
+            'Implementation-Title'    : project.name,
+            'Implementation-Version'  : project.version,
+            'Implementation-Vendor'   : 'MacatMovie',
+            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+// Sources/resources shared by every supported loader and Minecraft version.
+
+// Identical naming for regular, remapped and source archives.
+tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+    archiveBaseName.set('SignPlates-Forge-1.20.1')
+    archiveVersion.set("v${project.version}")
+}
+
+sourceSets.main.resources.srcDir '../../shared/designer-1.20.1/resources'
+
+// Remove recipes emitted by previous releases, including incremental builds.
+tasks.register('removeObsoletePlateRecipes', Delete) {
+    delete layout.buildDirectory.dir('resources/main/data/sign_plates/recipe/stonecutting'),
+           layout.buildDirectory.dir('resources/main/data/sign_plates/recipes/stonecutting')
+}
+tasks.withType(ProcessResources).configureEach {
+    dependsOn 'removeObsoletePlateRecipes'
+    exclude 'data/sign_plates/recipe/stonecutting/**', 'data/sign_plates/recipes/stonecutting/**'
+}
+
+sourceSets.main.resources.setSrcDirs(['src/main/resources'])
+sourceSets.main.resources.include 'fabric.mod.json', 'META-INF/**', 'sign_plates.mixins.json'
+tasks.named('processResources', ProcessResources).configure { from('../../shared/designer-1.20.1/resources') { include '**/*' } }
+tasks.register('removeLegacyDesignerResources', Delete) { delete layout.buildDirectory.dir('resources/main') }
+tasks.named('processResources').configure { dependsOn 'removeLegacyDesignerResources' }
+
+jar { manifest { attributes 'MixinConfigs': 'sign_plates.mixins.json' } }
+
+repositories { maven { url = 'https://maven.blamejared.com' }; maven { url = 'https://maven.terraformersmc.com/releases/' } }
+dependencies { compileOnly 'mezz.jei:jei-1.20.1-common-api:15.20.0.106' }
+dependencies { compileOnly 'dev.emi:emi-forge:1.1.24+1.20.1:api' }

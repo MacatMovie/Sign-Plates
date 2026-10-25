@@ -1,0 +1,123 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.147'
+}
+
+// One release version for every target.
+def releaseProperties = new Properties()
+file('../../gradle.properties').withInputStream { releaseProperties.load(it) }
+ext.mod_version = releaseProperties.getProperty('mod_version')
+
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = 'SignPlates-NeoForge-26.2.x'
+}
+
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(25)
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+neoForge {
+    version = neo_version
+
+    runs {
+        client {
+            client()
+        }
+
+        server {
+            server()
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', mod_id, '--all', '--output', file('src/generated/resources/').absolutePath, '--existing', file('src/main/resources/').absolutePath
+        }
+    }
+
+    mods {
+        create(mod_id) {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(ProcessResources).configureEach {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
+    filesMatching(['META-INF/neoforge.mods.toml']) {
+        expand replaceProperties
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = uri("${project.projectDir}/mcmodsrepo")
+        }
+    }
+}
+
+// Sources/resources shared by every supported loader and Minecraft version.
+
+// Identical naming for regular, remapped and source archives.
+tasks.withType(org.gradle.api.tasks.bundling.AbstractArchiveTask).configureEach {
+    archiveBaseName.set('SignPlates-NeoForge-26.2.x')
+    archiveVersion.set("v${project.version}")
+}
+
+sourceSets.main.java.srcDir '../../shared/neoforge-common/java/signplates/client'
+sourceSets.main.resources.srcDir '../../shared/neoforge-metadata/resources'
+sourceSets.main.resources.srcDir '../../shared/designer-26.2/resources'
+
+// Remove recipes emitted by previous releases, including incremental builds.
+tasks.register('removeObsoletePlateRecipes', Delete) {
+    delete layout.buildDirectory.dir('resources/main/data/sign_plates/recipe/stonecutting'),
+           layout.buildDirectory.dir('resources/main/data/sign_plates/recipes/stonecutting')
+}
+tasks.withType(ProcessResources).configureEach {
+    dependsOn 'removeObsoletePlateRecipes'
+    exclude 'data/sign_plates/recipe/stonecutting/**', 'data/sign_plates/recipes/stonecutting/**'
+}
+
+sourceSets.main.java.srcDir '../../shared/designer-modern/java'
+
+sourceSets.main.resources.setSrcDirs(['../../shared/neoforge-metadata/resources', 'src/main/resources'])
+sourceSets.main.resources.include 'fabric.mod.json', 'META-INF/**', 'sign_plates.mixins.json'
+tasks.named('processResources', ProcessResources).configure { from('../../shared/designer-26.2/resources') { include '**/*' } }
+tasks.register('removeLegacyDesignerResources', Delete) { delete layout.buildDirectory.dir('resources/main') }
+tasks.named('processResources').configure { dependsOn 'removeLegacyDesignerResources' }
+
+repositories { maven { url = 'https://maven.blamejared.com' }; maven { url = 'https://maven.terraformersmc.com/releases/' } }
+dependencies { compileOnly 'mezz.jei:jei-26.2-common-api:30.47.0.239' }

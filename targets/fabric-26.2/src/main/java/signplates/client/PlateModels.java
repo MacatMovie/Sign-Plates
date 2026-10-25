@@ -1,0 +1,3 @@
+package signplates.client;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+public final class PlateModels {public static void init(){net.fabricmc.fabric.api.client.rendering.v1.PictureInPictureRendererRegistry.register(context -> new PlatePreviewRenderer());signplates.mixin.ItemModelsAccessor.signplates$types().put(PlateModelCache.id("plate"),PlateItemModel.Unbaked.CODEC);ModelLoadingPlugin.register(context->context.modifyBlockModelAfterBake().register((model,ctx)->ctx.state().getBlock() instanceof signplates.block.PlateBlock?new PlateBlockModel(ctx.state(),model):model));}}

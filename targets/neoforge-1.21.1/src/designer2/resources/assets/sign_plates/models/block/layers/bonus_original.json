@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "symbol": "sign_plates:block/symbols/bonus",
+    "particle": "sign_plates:block/symbols/bonus"
+  },
+  "elements": [
+    {
+      "from": [
+        3.0,
+        1.03,
+        3.0
+      ],
+      "to": [
+        13.0,
+        1.03,
+        13.0
+      ],
+      "shade": true,
+      "faces": {
+        "up": {
+          "uv": [
+            16,
+            16,
+            0,
+            0
+          ],
+          "texture": "#symbol"
+        }
+      }
+    }
+  ],
+  "ambientocclusion": true,
+  "render_type": "minecraft:cutout"
+}

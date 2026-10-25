@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "symbol": "sign_plates:block/symbols/stop_mask",
+    "particle": "sign_plates:block/symbols/stop_mask"
+  },
+  "elements": [
+    {
+      "from": [
+        0.0,
+        1.03,
+        0.0
+      ],
+      "to": [
+        16.0,
+        1.03,
+        16.0
+      ],
+      "shade": true,
+      "faces": {
+        "up": {
+          "uv": [
+            16,
+            16,
+            0,
+            0
+          ],
+          "texture": "#symbol",
+          "tintindex": 0
+        }
+      }
+    }
+  ],
+  "ambientocclusion": true
+}

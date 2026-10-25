@@ -1,0 +1,81 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "layer": "minecraft:block/bamboo_block_top",
+    "particle": "minecraft:block/bamboo_block_top"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        0,
+        1
+      ],
+      "to": [
+        15,
+        1,
+        15
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            15,
+            15,
+            16
+          ],
+          "texture": "#layer"
+        },
+        "east": {
+          "uv": [
+            0,
+            1,
+            1,
+            15
+          ],
+          "rotation": 270,
+          "texture": "#layer"
+        },
+        "south": {
+          "uv": [
+            1,
+            0,
+            15,
+            1
+          ],
+          "rotation": 180,
+          "texture": "#layer"
+        },
+        "west": {
+          "uv": [
+            15,
+            1,
+            16,
+            15
+          ],
+          "rotation": 90,
+          "texture": "#layer"
+        },
+        "up": {
+          "uv": [
+            15,
+            15,
+            1,
+            1
+          ],
+          "texture": "#layer"
+        },
+        "down": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#layer",
+          "cullface": "down"
+        }
+      }
+    }
+  ]
+}

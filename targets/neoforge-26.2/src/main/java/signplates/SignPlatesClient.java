@@ -1,0 +1,6 @@
+package signplates;
+import net.neoforged.api.distmarker.Dist;import net.neoforged.bus.api.SubscribeEvent;import net.neoforged.fml.common.EventBusSubscriber;import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;import net.minecraft.client.color.block.BlockTintSource;import net.minecraft.client.renderer.block.BlockAndTintGetter;import net.minecraft.core.BlockPos;import net.minecraft.world.level.block.state.BlockState;
+@EventBusSubscriber(modid="sign_plates",value=Dist.CLIENT) public final class SignPlatesClient {
+ @SubscribeEvent public static void screens(net.neoforged.neoforge.client.event.RegisterMenuScreensEvent event){event.register(signplates.menu.PlateEditorMenu.TYPE.get(),signplates.client.PlateEditorScreen::new);}
+ @SubscribeEvent public static void colors(RegisterColorHandlersEvent.BlockTintSources event){event.register(java.util.List.of(new BlockTintSource(){public int colorInWorld(BlockState state,BlockAndTintGetter view,BlockPos pos){var a=signplates.client.PlateBlockModel.appearance(view,pos);return 0xFF000000|(a.glow()?a.tint().getGlowTintColor():a.tint().getTintColor());}public int color(BlockState state){return 0xFFFFFFFF;}}),signplates.init.SignPlatesModBlocks.PLATE.get());}
+}

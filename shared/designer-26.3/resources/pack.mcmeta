@@ -1,0 +1,13 @@
+{
+  "pack": {
+    "description": "Sign Plates resources",
+    "min_format": [
+      97,
+      0
+    ],
+    "max_format": [
+      121,
+      999
+    ]
+  }
+}

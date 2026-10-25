@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:block",
+  "random_sequence": "sign_plates:blocks/plate_3",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "sign_plates:plate_3"
+        }
+      ],
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
+    }
+  ]
+}

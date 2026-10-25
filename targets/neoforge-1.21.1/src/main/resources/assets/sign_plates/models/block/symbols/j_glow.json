@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false,
+  "textures": {
+    "symbol": "sign_plates:block/symbols/j",
+    "particle": "sign_plates:block/symbols/j"
+  },
+  "elements": [
+    {
+      "from": [
+        4.0,
+        1.01,
+        4.0
+      ],
+      "to": [
+        12.0,
+        1.01,
+        12.0
+      ],
+      "shade": false,
+      "faces": {
+        "up": {
+          "uv": [
+            16,
+            16,
+            0,
+            0
+          ],
+          "texture": "#symbol",
+          "tintindex": 0,
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15,
+            "ambient_occlusion": false
+          }
+        }
+      }
+    }
+  ]
+}
