@@ -39,6 +39,7 @@ public class PlateBlock extends Block implements SimpleWaterloggedBlock, net.min
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final EnumProperty<AttachFace> FACE = FaceAttachedHorizontalDirectionalBlock.FACE;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+    public static final BooleanProperty WAXED = BooleanProperty.create("waxed");
 
 	public static final net.minecraft.world.level.block.state.properties.IntegerProperty LIGHT=net.minecraft.world.level.block.state.properties.IntegerProperty.create("light",0,signplates.PlateAppearance.MAX_LIGHT);
 	public static final BooleanProperty GLOW = BooleanProperty.create("glow");
@@ -46,11 +47,28 @@ public class PlateBlock extends Block implements SimpleWaterloggedBlock, net.min
     public PlateBlock() {
         // Symbol emission and actual block light are independent visual settings.
         super(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(0.5f,6f).noOcclusion().lightLevel(s->s.getValue(LIGHT)).isRedstoneConductor((s,w,p)->false));
-        registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH).setValue(FACE,AttachFace.WALL).setValue(WATERLOGGED,false).setValue(GLOW,false).setValue(LIGHT,0));
+        registerDefaultState(stateDefinition.any().setValue(FACING,Direction.NORTH).setValue(FACE,AttachFace.WALL).setValue(WATERLOGGED,false).setValue(WAXED,false).setValue(GLOW,false).setValue(LIGHT,0));
     }
     @Override public net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(BlockPos pos,BlockState state) {return new PlateBlockEntity(pos,state);}
     @Override public ItemStack getCloneItemStack(net.minecraft.world.level.LevelReader level,BlockPos pos,BlockState state) {
-        return signplates.PlateStyle.stack(level.getBlockEntity(pos) instanceof PlateBlockEntity plate?plate.appearance():signplates.PlateAppearance.DEFAULT);
+        ItemStack result=signplates.PlateStyle.stack(level.getBlockEntity(pos) instanceof PlateBlockEntity plate?plate.appearance():signplates.PlateAppearance.DEFAULT);
+        signplates.PlateWax.set(result,state.getValue(WAXED));
+        return result;
+    }
+
+
+    @Override public java.util.List<ItemStack> getDrops(BlockState state,net.minecraft.world.level.storage.loot.LootParams.Builder params) {
+        ItemStack tool=params.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.TOOL);
+        if(tool!=null && !tool.isEmpty() && params.getOptionalParameter(net.minecraft.world.level.storage.loot.parameters.LootContextParams.BLOCK_ENTITY) instanceof PlateBlockEntity plate) {
+            var server=params.getLevel();
+            var silk=server.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH);
+            if(net.minecraft.world.item.enchantment.EnchantmentHelper.getItemEnchantmentLevel(silk,tool)>0) {
+                ItemStack drop=signplates.PlateStyle.stack(plate.appearance());
+                signplates.PlateWax.set(drop,state.getValue(WAXED));
+                return java.util.List.of(drop);
+            }
+        }
+        return super.getDrops(state,params);
     }
 
 	@Override
@@ -97,12 +115,31 @@ public class PlateBlock extends Block implements SimpleWaterloggedBlock, net.min
 	@Override
 	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
-		builder.add(FACING, FACE, WATERLOGGED, GLOW, LIGHT);
+		builder.add(FACING, FACE, WATERLOGGED, WAXED, GLOW, LIGHT);
 	}
 
     @Override protected ItemInteractionResult useItemOn(ItemStack stack,BlockState state,Level level,BlockPos pos,Player player,InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit) {
         if(!player.mayBuild() || !level.mayInteract(player,pos)) return ItemInteractionResult.FAIL;
         if(!(level.getBlockEntity(pos) instanceof PlateBlockEntity plate)) return ItemInteractionResult.FAIL;
+        if(stack.is(Items.HONEYCOMB) && !state.getValue(WAXED)) {
+            if(!level.isClientSide()) {
+                level.setBlock(pos,state.setValue(WAXED,true),3);
+                level.playSound(null,pos,net.minecraft.sounds.SoundEvents.HONEYCOMB_WAX_ON,net.minecraft.sounds.SoundSource.BLOCKS,1f,1f);
+                if(!player.getAbilities().instabuild)stack.shrink(1);
+                if(level instanceof net.minecraft.server.level.ServerLevel server)server.sendParticles(net.minecraft.core.particles.ParticleTypes.WAX_ON,pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5,5,.25,.25,.25,0);
+            }
+            return ItemInteractionResult.SUCCESS;
+        }
+        if(stack.is(net.minecraft.tags.ItemTags.AXES) && state.getValue(WAXED)) {
+            if(!level.isClientSide()) {
+                level.setBlock(pos,state.setValue(WAXED,false),3);
+                level.playSound(null,pos,net.minecraft.sounds.SoundEvents.AXE_WAX_OFF,net.minecraft.sounds.SoundSource.BLOCKS,1f,1f);
+                stack.hurtAndBreak(1,player,net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+                if(level instanceof net.minecraft.server.level.ServerLevel server)server.sendParticles(net.minecraft.core.particles.ParticleTypes.WAX_OFF,pos.getX()+.5,pos.getY()+.5,pos.getZ()+.5,5,.25,.25,.25,0);
+            }
+            return ItemInteractionResult.SUCCESS;
+        }
+        if(state.getValue(WAXED))return ItemInteractionResult.CONSUME;
         var a=plate.appearance();
         boolean sponge=stack.is(Items.SPONGE)||stack.is(Items.WET_SPONGE);
         PlateTint tint=PlateTint.fromItem(stack);
@@ -124,6 +161,7 @@ public class PlateBlock extends Block implements SimpleWaterloggedBlock, net.min
     @Override
     protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
             Player player, net.minecraft.world.phys.BlockHitResult hit) {
+        if (state.getValue(WAXED)) return net.minecraft.world.InteractionResult.CONSUME;
         if (player.isShiftKeyDown()) return net.minecraft.world.InteractionResult.PASS;
         if (!player.mayBuild() || !level.mayInteract(player, pos)) return net.minecraft.world.InteractionResult.FAIL;
         if (player instanceof net.minecraft.server.level.ServerPlayer serverPlayer)

@@ -20,8 +20,9 @@ public class SignPlateBlockItem extends BlockItem {
     }
     @Override public net.minecraft.world.InteractionResult place(net.minecraft.world.item.context.BlockPlaceContext context) {
         var appearance=signplates.PlateStyle.appearance(context.getItemInHand());
+        boolean waxed=signplates.PlateWax.isWaxed(context.getItemInHand());
         var result=super.place(context);
-        if(result.consumesAction() && !context.getLevel().isClientSide() && context.getLevel().getBlockEntity(context.getClickedPos()) instanceof signplates.block.PlateBlockEntity plate) plate.update(appearance);
+        if(result.consumesAction() && !context.getLevel().isClientSide() && context.getLevel().getBlockEntity(context.getClickedPos()) instanceof signplates.block.PlateBlockEntity plate) { plate.update(appearance); var placed=context.getLevel().getBlockState(context.getClickedPos()); context.getLevel().setBlock(context.getClickedPos(),placed.setValue(signplates.block.PlateBlock.WAXED,waxed),3); }
         return result;
     }
     @Override public void appendHoverText(ItemStack stack,Item.TooltipContext context,List<Component> tooltip,TooltipFlag flag) {
@@ -31,6 +32,8 @@ public class SignPlateBlockItem extends BlockItem {
             tooltip.add(Component.translatable("tooltip.sign_plates.hold_shift").withStyle(ChatFormatting.GOLD));
             return;
         }
+        tooltip.add(Component.translatable("tooltip.sign_plates.wax_hint").withStyle(ChatFormatting.GRAY));
+        if(signplates.PlateWax.isWaxed(stack)) tooltip.add(Component.translatable("tooltip.sign_plates.waxed").withStyle(ChatFormatting.GRAY));
         boolean blank=signplates.PlateStyle.appearance(stack).symbol()==0;
         if(blank) {
             tooltip.add(Component.translatable("tooltip.sign_plates.blank_edit").withStyle(ChatFormatting.GRAY));

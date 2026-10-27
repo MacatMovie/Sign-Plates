@@ -18,7 +18,7 @@ public final class PlateEditorMenu extends AbstractContainerMenu {
   super(TYPE,id);owner=inventory.player;level=owner.level();this.pos=pos.immutable();hitFace=face;expectedState=level.getBlockState(pos);expectedEntity=(PlateBlockEntity)level.getBlockEntity(pos);expectedRevision=expectedEntity.revision();var a=expectedEntity.appearance();initialSymbol=a.symbol();initialMaterial=a.frame();syncAppearance(a);addInventorySyncSlots(inventory);addDataSlots(data);
  }
  public static void openBlock(ServerPlayer player,BlockPos pos,Direction face){
-  if(!player.mayBuild()||player.isSpectator()||!player.level().mayInteract(player,pos)||!(player.level().getBlockEntity(pos) instanceof PlateBlockEntity plate))return;
+  if(!player.mayBuild()||player.isSpectator()||!player.level().mayInteract(player,pos)||!(player.level().getBlockEntity(pos) instanceof PlateBlockEntity plate)||player.level().getBlockState(pos).getValue(PlateBlock.WAXED))return;
   player.openMenu(new net.fabricmc.fabric.api.menu.v1.ExtendedMenuProvider<Opening>(){
    @Override public AbstractContainerMenu createMenu(int id,Inventory inv,Player p){return new PlateEditorMenu(id,inv,pos,face);}
    @Override public Component getDisplayName(){return Component.translatable("screen.sign_plates.editor");}
@@ -34,13 +34,15 @@ public final class PlateEditorMenu extends AbstractContainerMenu {
  @Override public void clicked(int slot,int button,ContainerInput type,Player player){}
  @Override public boolean clickMenuButton(Player player,int button){return false;}
  @Override public ItemStack quickMoveStack(Player player,int slot){return ItemStack.EMPTY;}
- @Override public boolean stillValid(Player player){if(level.isClientSide())return true;return player==owner&&player.level()==level&&player.isAlive()&&!player.isSpectator()&&player.mayBuild()&&level.hasChunkAt(pos)&&level.getBlockState(pos)==expectedState&&level.getBlockEntity(pos)==expectedEntity&&expectedEntity.revision()==expectedRevision&&level.mayInteract(player,pos)&&player.distanceToSqr(Vec3.atCenterOf(pos))<=64;}
+ @Override public boolean stillValid(Player player){if(level.isClientSide())return true;return player==owner&&player.level()==level&&player.isAlive()&&!player.isSpectator()&&player.mayBuild()&&level.hasChunkAt(pos)&&!level.getBlockState(pos).getValue(PlateBlock.WAXED)&&level.getBlockState(pos)==expectedState&&level.getBlockEntity(pos)==expectedEntity&&expectedEntity.revision()==expectedRevision&&level.mayInteract(player,pos)&&player.distanceToSqr(Vec3.atCenterOf(pos))<=64;}
  private boolean affordable(Player player,java.util.List<VisualCost.Material> costs){return player.getAbilities().instabuild||costs.stream().allMatch(c->count(c.item())>=c.amount());}
  public boolean applyVisuals(Player player,PlateAppearance next){
   if(!(player instanceof ServerPlayer server)||player.containerMenu!=this||!stillValid(player))return false;
   var current=expectedEntity.appearance();if(current.equals(next))return true;
   if(next.light()!=current.light()&&!PlateAppearance.isLightOption(next.light()))return false;
   if(next.tint()!=current.tint()&&next.tint()!=PlateTint.NONE&&PlateStyle.dye(next.tint())==Items.AIR)return false;
+  if(next.frame()!=current.frame()&&!PlateLayers.frameAvailable(next.frame()))return false;
+  if(next.background()!=current.background()&&!PlateLayers.backgroundAvailable(next.background()))return false;
   var costs=VisualCost.between(current,next);if(!affordable(player,costs))return false;
   var permission=net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.invoker().interact(player,level,InteractionHand.MAIN_HAND,new BlockHitResult(Vec3.atCenterOf(pos),hitFace,pos,false));
   if(permission==net.minecraft.world.InteractionResult.FAIL){player.sendOverlayMessage(Component.translatable("screen.sign_plates.denied"));server.closeContainer();return false;}

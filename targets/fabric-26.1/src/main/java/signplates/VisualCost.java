@@ -6,12 +6,14 @@ import net.minecraft.world.item.*;
 /** Shared client/server cost ledger, including the selected Glow option's dust cost. */
 public final class VisualCost {
  public record Material(Item item,int amount){}
- public static Item frame(int index){return switch(PlateLayers.FRAMES.get(index).id()){case "iron"->Items.IRON_INGOT;case "copper"->Items.COPPER_INGOT;case "gold"->Items.GOLD_INGOT;case "coal"->Items.COAL;default->Items.AIR;};}
+ public static Item frame(int index){var tint=PlateLayers.dyedFrame(index);if(tint!=PlateTint.NONE)return PlateStyle.dye(tint);return switch(PlateLayers.FRAMES.get(index).id()){case "iron"->Items.IRON_INGOT;case "copper"->Items.COPPER_INGOT;case "gold"->Items.GOLD_INGOT;case "coal"->Items.COAL;default->Items.AIR;};}
  public static Item background(int index){
   var layer=PlateLayers.BACKGROUNDS.get(index);if(layer.id().equals("none")||layer.id().equals("iron"))return Items.AIR;
-  String id=layer.texture().substring("minecraft:block/".length());
+  String texture=layer.texture();
+  String namespace=texture.substring(0,texture.indexOf(':'));
+  String id=texture.substring(texture.indexOf('/')+1);
   if(id.endsWith("_top"))id=id.substring(0,id.length()-4);
-  return BuiltInRegistries.ITEM.getValue(Identifier.withDefaultNamespace(id));
+  return BuiltInRegistries.ITEM.getValue(Identifier.fromNamespaceAndPath(namespace,id));
  }
  public static List<Material> between(PlateAppearance applied,PlateAppearance draft){
   var cost=new LinkedHashMap<Item,Integer>();

@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "layer": "sign_plates:block/frames/dyed_white",
+    "particle": "sign_plates:block/frames/dyed_white"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        2,
+        8.51
+      ],
+      "to": [
+        14,
+        14,
+        8.51
+      ],
+      "shade": false,
+      "faces": {
+        "south": {
+          "texture": "#layer",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ],
+          "forge_data": {
+            "block_light": 15,
+            "sky_light": 15,
+            "ambient_occlusion": false
+          }
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false
+}

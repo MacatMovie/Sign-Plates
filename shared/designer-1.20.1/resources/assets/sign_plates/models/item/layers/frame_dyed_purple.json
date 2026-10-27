@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "layer": "sign_plates:block/frames/dyed_purple",
+    "particle": "sign_plates:block/frames/dyed_purple"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        2,
+        8.51
+      ],
+      "to": [
+        14,
+        14,
+        8.51
+      ],
+      "shade": true,
+      "faces": {
+        "south": {
+          "texture": "#layer",
+          "uv": [
+            2,
+            2,
+            14,
+            14
+          ]
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout"
+}

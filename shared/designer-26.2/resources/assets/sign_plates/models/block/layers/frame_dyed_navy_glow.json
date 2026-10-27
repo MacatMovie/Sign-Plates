@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "layer": "sign_plates:block/frames/dyed_navy",
+    "particle": "sign_plates:block/frames/dyed_navy"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        1.015,
+        2
+      ],
+      "to": [
+        14,
+        1.015,
+        14
+      ],
+      "shade": false,
+      "faces": {
+        "up": {
+          "texture": "#layer",
+          "uv": [
+            14,
+            14,
+            2,
+            2
+          ]
+        }
+      },
+      "light_emission": 15
+    }
+  ],
+  "ambientocclusion": false
+}

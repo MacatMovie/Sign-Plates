@@ -131,8 +131,8 @@ public final class PlateEditorScreen extends AbstractContainerScreen<PlateEditor
     private void filter() {
         filtered.clear();backgrounds.clear();String needle=query.strip().toLowerCase(Locale.ROOT);
         if(tab==0) {
-            for(int i=0;i<signplates.PlateLayers.BACKGROUNDS.size();i++) if(needle.isEmpty() || backgroundName(i).getString().toLowerCase(Locale.ROOT).contains(needle)) filtered.add(i);
-            for(int i=0;i<signplates.PlateLayers.FRAMES.size();i++) if(needle.isEmpty() || frameName(i).getString().toLowerCase(Locale.ROOT).contains(needle)) backgrounds.add(i);
+            for(int i=0;i<signplates.PlateLayers.BACKGROUNDS.size();i++) if(signplates.PlateLayers.backgroundAvailable(i) && (needle.isEmpty() || backgroundName(i).getString().toLowerCase(Locale.ROOT).contains(needle))) filtered.add(i);
+            for(int i=0;i<signplates.PlateLayers.FRAMES.size();i++) if(signplates.PlateLayers.frameAvailable(i) && (needle.isEmpty() || frameName(i).getString().toLowerCase(Locale.ROOT).contains(needle))) backgrounds.add(i);
         } else if(tab==1) {
             for(int i=0;i<PlateCatalog.SYMBOLS.size();i++) {
                 if(category!=0 && PlateCatalog.category(i)!=category) continue;

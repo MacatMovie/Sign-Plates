@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "layer": "sign_plates:block/frames/dyed_beige",
+    "particle": "sign_plates:block/frames/dyed_beige"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        1.015,
+        2
+      ],
+      "to": [
+        14,
+        1.015,
+        14
+      ],
+      "shade": true,
+      "faces": {
+        "up": {
+          "texture": "#layer",
+          "uv": [
+            14,
+            14,
+            2,
+            2
+          ]
+        }
+      }
+    }
+  ]
+}

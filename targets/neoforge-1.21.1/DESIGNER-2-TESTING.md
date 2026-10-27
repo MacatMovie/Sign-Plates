@@ -44,7 +44,7 @@ models and unchanged supplied PNGs. In-game rendering still needs testing.
   `sign_plates:plate_empty` stacks/chunk palettes migrate before registry
   decoding. Existing appearance components and block entities are preserved.
   The block entity type remains `sign_plates:plate` for save compatibility.
-- Glow only makes the symbol emissive. Plates no longer emit level-13 block
+- The Emission toggle makes both the symbol and frame emissive. Plates no longer emit level-13 block
   light, which also lit their frame/background. Migrated chunks are marked for
   relighting so old cached block light can be removed.
 - Symbol item names now read **Sign Plate: Fire**, **Sign Plate: Light**, etc.

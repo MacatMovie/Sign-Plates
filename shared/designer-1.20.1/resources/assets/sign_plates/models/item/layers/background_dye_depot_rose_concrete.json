@@ -1,0 +1,78 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "layer": "dye_depot:block/rose_concrete",
+    "particle": "dye_depot:block/rose_concrete"
+  },
+  "elements": [
+    {
+      "from": [
+        1,
+        1,
+        7.5
+      ],
+      "to": [
+        15,
+        15,
+        8.5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#layer"
+        },
+        "south": {
+          "uv": [
+            1,
+            1,
+            15,
+            15
+          ],
+          "texture": "#layer"
+        },
+        "east": {
+          "uv": [
+            15,
+            1,
+            16,
+            15
+          ],
+          "texture": "#layer"
+        },
+        "west": {
+          "uv": [
+            0,
+            1,
+            1,
+            15
+          ],
+          "texture": "#layer"
+        },
+        "up": {
+          "uv": [
+            1,
+            0,
+            15,
+            1
+          ],
+          "texture": "#layer"
+        },
+        "down": {
+          "uv": [
+            1,
+            15,
+            15,
+            16
+          ],
+          "texture": "#layer"
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout"
+}

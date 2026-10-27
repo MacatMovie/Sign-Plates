@@ -36,8 +36,8 @@ for target in sorted((R/'targets').iterdir()):
  item_display=models['item/sign_plate']['display']
  assert item_display['ground']['rotation']==[-90,0,0],(name,'dropped front must face up')
  assert item_display['fixed']['rotation']==[0,180,0],(name,'item-frame front must face outward')
- assert len([x for x in models if x.startswith('block/layers/')])==294,name
- assert len([x for x in models if x.startswith('item/layers/')])==294,name
+ assert len([x for x in models if x.startswith('block/layers/')])==378,name
+ assert len([x for x in models if x.startswith('item/layers/')])==378,name
  for path,m in models.items():
   if modern and (path.startswith('item/layers/') or path.startswith('item/preview/layers/')):
    assert m['display']['ground']==item_display['ground'] and m['display']['fixed']==item_display['fixed'],(name,path,'item transforms')
@@ -48,9 +48,16 @@ for target in sorted((R/'targets').iterdir()):
   if path.startswith('item/layers/') and not path.startswith('item/layers/background_'):
    for e in m.get('elements',[]):assert set(e['faces'])=={'south'},(name,path)
   if 'layers/frame_' in path or 'layers/background_' in path:
-   assert 'light_emission' not in json.dumps(m) and 'block_light' not in json.dumps(m),(name,path)
+   serialized=json.dumps(m)
+   if path.startswith(('block/layers/frame_','item/layers/frame_','item/preview/layers/frame_')) and path.endswith('_glow'):
+    assert all(e.get('shade') is False for e in m.get('elements',[])),(name,path,'glowing frame should not shade')
+    assert ('light_emission' in serialized if modern else 'block_light' in serialized),(name,path,'glowing frame must be fullbright')
+   else:
+    assert 'light_emission' not in serialized and 'block_light' not in serialized,(name,path,'normal frame/background must remain unlit')
  for symbol in order[1:]:
   for style in ['original','tint','glow']:assert f'block/layers/{symbol}_{style}' in models
+ for frame in [name for name in models if name.startswith('block/layers/frame_') and not name.endswith('_glow')]:
+  assert frame+'_glow' in models,(name,frame,'missing emissive frame')
  lang=read(a/'lang/en_us.json');assert lang['block.sign_plates.sign_plate']=='Sign Plate'
  # Ports must retain every designer label from the approved reference resources.
  reference_lang=read(canonical/'assets/sign_plates/lang/en_us.json')
@@ -72,7 +79,7 @@ for target in sorted((R/'targets').iterdir()):
   if name.startswith('fabric-'):assert 'net.fabricmc.fabric.api.menu.v1.ExtendedMenuType' in menu and 'ExtendedMenuProvider<Opening>' in menu,name
   assert read(a/'items/sign_plate.json')['model']['type']=='sign_plates:plate'
   assert read(a/'items/preview/sign_plate.json')['model']['angled']
-  assert len([x for x in models if x.startswith('item/preview/layers/')])==294
- print('PASS',name,': 1 block/item, 768 states, 5 frames, 36 backgrounds, 86 symbols, separate layers and original PNGs')
+  assert len([x for x in models if x.startswith('item/preview/layers/')])==378
+ print('PASS',name,': 1 block/item, 768 states, 37 frames + 36 emissive variants, 52 backgrounds, 86 symbols, separate layers and original PNGs')
  checks+=1
 print('Validated',checks,'targets')

@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "layer": "sign_plates:block/frames/dyed_mint",
+    "particle": "sign_plates:block/frames/dyed_mint"
+  },
+  "elements": [
+    {
+      "from": [
+        2,
+        1.015,
+        2
+      ],
+      "to": [
+        14,
+        1.015,
+        14
+      ],
+      "shade": false,
+      "faces": {
+        "up": {
+          "texture": "#layer",
+          "uv": [
+            14,
+            14,
+            2,
+            2
+          ],
+          "neoforge_data": {
+            "block_light": 15,
+            "sky_light": 15,
+            "ambient_occlusion": false
+          }
+        }
+      }
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "ambientocclusion": false
+}

@@ -51,8 +51,8 @@ final class PlateBakedModel extends PlateForwardingModel {
     static List<ResourceLocation> componentIds() {
         var ids=new ArrayList<ResourceLocation>();
         for(String context:List.of("block","item")) {
-            for(var layer:PlateLayers.FRAMES) if(!layer.id().equals("none"))ids.add(id(context+"/layers/frame_"+layer.id()));
-            for(var layer:PlateLayers.BACKGROUNDS) if(!layer.id().equals("none"))ids.add(id(context+"/layers/background_"+layer.id()));
+            for(int i=0;i<PlateLayers.FRAMES.size();i++) if(i>0 && PlateLayers.frameAvailable(i))for(String variant:List.of("","_glow"))ids.add(id(context+"/layers/frame_"+PlateLayers.FRAMES.get(i).id()+variant));
+            for(int i=0;i<PlateLayers.BACKGROUNDS.size();i++) if(i>0 && PlateLayers.backgroundAvailable(i))ids.add(id(context+"/layers/background_"+PlateLayers.BACKGROUNDS.get(i).id()));
             for(String symbol:PlateCatalog.SYMBOLS) if(!symbol.equals("empty"))for(String style:List.of("original","tint","glow"))ids.add(id(context+"/layers/"+symbol+"_"+style));
         }
         return ids;
@@ -77,7 +77,7 @@ final class PlateBakedModel extends PlateForwardingModel {
         var result=new ArrayList<BakedQuad>();String prefix=(item?"item":"block")+"/layers/";
         var culled=new EnumMap<Direction,List<BakedQuad>>(Direction.class);
         if(a.background()>0)add(result,culled,prefix+"background_"+PlateLayers.BACKGROUNDS.get(a.background()).id(),orientation,0xFFFFFF,item);
-        if(a.frame()>0)add(result,culled,prefix+"frame_"+PlateLayers.FRAMES.get(a.frame()).id(),orientation,0xFFFFFF,item);
+        if(a.frame()>0)add(result,culled,prefix+"frame_"+PlateLayers.FRAMES.get(a.frame()).id()+(a.glow()?"_glow":""),orientation,0xFFFFFF,item);
         if(a.symbol()>0)add(result,culled,prefix+PlateCatalog.SYMBOLS.get(a.symbol())+"_"+(a.glow()?"glow":a.tint()!=PlateTint.NONE?"tint":"original"),orientation,a.glow()?a.tint().getGlowTintColor():a.tint().getTintColor(),item);
         culled.replaceAll((direction,quads)->List.copyOf(quads));
         var geometry=new Geometry(List.copyOf(result),Map.copyOf(culled));cache.put(key,geometry);return geometry;
